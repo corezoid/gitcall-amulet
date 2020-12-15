@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://schema.corezoid.com/gitcall/gitcall-amulet/helm.json",
+  "type": "object",
+  "required": ["gitcall_amulet"],
+  "properties": {
+    "gitcall_amulet": {
+      "type": "object",
+      "required": ["helm"],
+      "properties": {
+        "helm": {
+          "type": "object",
+          "required": [],
+          "properties": {
+            "image_pull_policy": { "type": "string", "enum": ["IfNotPresent", "Always"], "default": "IfNotPresent" },
+            "image_pull_secrets": {
+              "type": "array",
+              "default": [],
+              "items": { "type": "string", "minLength": 1, "maxLength": 10000}
+            }
+          }
+        }
+      }
+    }
+  }
+}

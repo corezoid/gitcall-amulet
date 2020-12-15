@@ -1,0 +1,140 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://schema.corezoid.com/gitcall/gitcall-amulet/main.json",
+  "type": "object",
+  "required": ["gitcall_amulet"],
+  "properties": {
+    "gitcall_amulet": {
+      "type": "object",
+      "required": [],
+      "properties": {
+        "gitcall_features_tests": {
+          "oneOf": [
+            {
+              "type": "object",
+              "cz:default": true,
+              "required": ["enabled"],
+              "properties": {
+                "enabled": { "type": "boolean", "enum": [true], "default": true },
+                "rabbitmq_host": { "type": "string", "minLength": 1, "maxLength": 1000, "default": "" },
+                "rabbitmq_user": { "type": "string", "minLength": 1, "maxLength": 1000, "default": "" },
+                "rabbitmq_password": { "type": "string", "minLength": 1, "maxLength": 1000, "default": "" },
+                "rabbitmq_gitcall_vhost": { "type": "string", "minLength": 1, "maxLength": 1000, "default": "" },
+                "rabbitmq_dundergitcall_vhost": { "type": "string", "minLength": 1, "maxLength": 1000, "default": "" }
+              }
+            },
+            {
+              "type": "object",
+              "properties": {
+                "enabled": { "type": "boolean", "enum": [false] }
+              }
+            }
+          ]
+        },
+        "usercode_network_policy_tests": {
+          "oneOf": [
+            {
+              "type": "object",
+              "cz:default": true,
+              "required": ["enabled"],
+              "properties": {
+                "enabled": { "type": "boolean", "enum": [true], "default": true },
+                "rabbitmq_host": { "type": "string", "minLength": 1, "maxLength": 1000, "default": "" },
+                "rabbitmq_user": { "type": "string", "minLength": 1, "maxLength": 1000, "default": "" },
+                "rabbitmq_password": { "type": "string", "minLength": 1, "maxLength": 1000, "default": "" },
+                "rabbitmq_gitcall_vhost": { "type": "string", "minLength": 1, "maxLength": 1000, "default": "" },
+                "rabbitmq_dundergitcall_vhost": { "type": "string", "minLength": 1, "maxLength": 1000, "default": "" }
+              }
+            },
+            {
+              "type": "object",
+              "properties": {
+                "enabled": { "type": "boolean", "enum": [false] }
+              }
+            }
+          ]
+        },
+        "gitcall_network_policy_tests": {
+          "oneOf": [
+            {
+              "type": "object",
+              "cz:default": true,
+              "required": ["enabled"],
+              "properties": {
+                "enabled": { "type": "boolean", "enum": [true], "default": true },
+                "gitcall_allow": {
+                  "type": "array",
+                  "items": { "type": "string", "minLength": 1, "maxLength": 1000 },
+                  "default": [
+                    "rabbitmq:5672",
+                    "postgres:5432",
+                    "gitcall-docker-engine:2375",
+                    "gitcall-docker-registry:443",
+                    "pimp-service:8080",
+                    "github.com:443"
+                  ],
+                  "description": "must have access to: rabbitmq, postgress, docker engine, docker registry, pimp, external git repositories"
+                },
+                "gitcall_deny": {
+                  "type": "array",
+                  "items": { "type": "string", "minLength": 1, "maxLength": 1000 }
+                },
+                "pimp_allow": {
+                  "type": "array",
+                  "items": { "type": "string", "minLength": 1, "maxLength": 1000 },
+                  "default": [
+                    "10.96.0.1:443"
+                  ],
+                  "description": "must have access to: kubernetes api service"
+                },
+                "pimp_deny": {
+                  "type": "array",
+                  "items": { "type": "string", "minLength": 1, "maxLength": 1000 },
+                  "default": [
+                    "rabbitmq:5672",
+                    "postgres:5432",
+                    "google.com:443"
+                  ],
+                  "description": "must deny access to: internal hosts, external hosts"
+                },
+                "docker_engine_allow": {
+                  "type": "array",
+                  "items": { "type": "string", "minLength": 1, "maxLength": 1000 },
+                  "default": [
+                    "gitcall-docker-registry:443",
+                    "google.com:443"
+                  ],
+                  "description": "must have access to: docker registry, external hosts"
+                },
+                "docker_engine_deny": {
+                  "type": "array",
+                  "items": { "type": "string", "minLength": 1, "maxLength": 1000 }
+                },
+                "docker_registry_allow": {
+                  "type": "array",
+                  "items": { "type": "string", "minLength": 1, "maxLength": 1000 }
+                },
+                "docker_registry_deny": {
+                  "type": "array",
+                  "items": { "type": "string", "minLength": 1, "maxLength": 1000 },
+                  "default": [
+                    "rabbitmq:5672",
+                    "postgres:5432",
+                    "google.com:443"
+                  ],
+                  "description": "must deny access to: internal hosts, external hosts"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "properties": {
+                "enabled": { "type": "boolean", "enum": [false] }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

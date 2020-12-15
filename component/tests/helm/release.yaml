@@ -1,0 +1,63 @@
+# [REQUIRED]: object.
+gitcall_amulet:
+    # Alternative settings:
+    # 1#
+    # enabled: null
+    gitcall_features_tests:
+        # [REQUIRED]: boolean.
+        enabled: true
+        rabbitmq_host: 'rmq.host'
+        rabbitmq_password: 'rmqPass'
+        rabbitmq_user: 'rmqUser'
+        rabbitmq_dundergitcall_vhost: 'dundergitcall'
+        rabbitmq_gitcall_vhost: 'gitcall'
+    usercode_network_policy_tests:
+        # [REQUIRED]: boolean.
+        enabled: true
+        rabbitmq_host: 'rmq.host'
+        rabbitmq_password: 'rmqPass'
+        rabbitmq_user: 'rmqUser'
+        rabbitmq_dundergitcall_vhost: 'dundergitcall'
+        rabbitmq_gitcall_vhost: 'gitcall'
+    gitcall_network_policy_tests:
+        # [REQUIRED]: boolean.
+        enabled: true
+        gitcall_allow:
+            - allow:4444
+        gitcall_deny:
+            - deny:5555
+        pimp_allow:
+            - allow:4444
+        pimp_deny:
+            - deny:5555
+        docker_engine_allow:
+            - allow:4444
+        docker_engine_deny:
+            - deny:5555
+        docker_registry_allow:
+            - allow:4444
+        docker_registry_deny:
+            - deny:5555
+    # [REQUIRED]: object.
+    helm:
+        gitcall_namespace: "gitcall"
+        image_pull_policy: 'IfNotPresent'
+        image_pull_secrets: ["the-image-pull-secret"]
+release:
+    name: 'gitcall_amulet_release'
+    helm:
+        enabled: true
+        chart:
+            version: '0.1.2'
+            description: 'aDescription'
+        context: ''
+        namespace: ''
+        release: ''
+        deploy: ['gitcall_amulet']
+    require:
+        gitcall_amulet: 'aVersion'
+    repositories:
+        gitcall_amulet:
+            source: 'local'
+            local:
+                path: '../../'

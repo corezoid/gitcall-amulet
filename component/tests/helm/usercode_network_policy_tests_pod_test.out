@@ -1,0 +1,42 @@
+# Source: gitcall_amulet_release/charts/gitcall_amulet/templates/usercode-network-policy-tests-pod.yaml
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: RELEASE-NAME-gitcall-amulet-usercode-network-policy-tests-job
+  annotations:
+    "helm.sh/hook": test
+  labels:
+    release: "RELEASE-NAME"
+    app: "gitcall"
+    tier: "gitcall_amulet"
+spec:
+  activeDeadlineSeconds: 180 # 3min
+  ttlSecondsAfterFinished: 360 # 6min
+  backoffLimit: 0
+  template:
+    metadata:
+      labels:
+        release: "RELEASE-NAME"
+        app: "gitcall"
+        tier: "gitcall_amulet"
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: main
+          imagePullPolicy: "IfNotPresent"
+          image: docker-hub.middleware.biz/gitcall/gitcall-amulet:aVersion
+          command: ["/app/usercode_network_policy_tests"]
+          args:
+            - "-test.v"
+            - "--gitcall-amqp=amqp://rmqUser:rmqPass@rmq.host:5672/gitcall"
+            - "--dundergitcall-amqp=amqp://rmqUser:rmqPass@rmq.host:5672/dundergitcall"
+            - "--rabbitmq-addr=rmq.host:5672"
+          resources:
+            limits:
+              cpu: 100m
+              memory: 50Mi
+            requests:
+              cpu: 100m
+              memory: 50Mi
+      imagePullSecrets:
+      - name: "the-image-pull-secret"
