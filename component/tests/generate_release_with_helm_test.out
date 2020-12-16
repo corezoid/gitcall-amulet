@@ -1,4 +1,5 @@
 gitcall_amulet:
+    # End-to-end functional test. Creates a code, builds it, deploys, send a test, validate result, remove code
     # Alternative settings:
     # 1#
     # enabled: null
@@ -10,6 +11,10 @@ gitcall_amulet:
         rabbitmq_host: ''
         rabbitmq_password: ''
         rabbitmq_user: ''
+    # In this section you can define allowed\denied endpoints for components: gitcall, pimp, docker registry etc.
+    # The component adds 'helm test' that you can run at anytime or after deploy.
+    # Works in conjunction with gitcall_network_policy component.
+    # google.com is used to test access to Internet
     # Alternative settings:
     # 1#
     # enabled: null
@@ -24,6 +29,7 @@ gitcall_amulet:
         gitcall_deny: []
         pimp_allow: ['10.96.0.1:443']
         pimp_deny: ['rabbitmq:5672', 'postgres:5432', 'google.com:443']
+    # This section performs network policy tests. What usercode can access and what not.
     # Alternative settings:
     # 1#
     # enabled: null

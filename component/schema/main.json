@@ -3,6 +3,7 @@
   "$id": "https://schema.corezoid.com/gitcall/gitcall-amulet/main.json",
   "type": "object",
   "required": ["gitcall_amulet"],
+  "description": "Gitcall amulete provides some deployment tests.\nThey could be run after deployment with 'helm test' command.",
   "properties": {
     "gitcall_amulet": {
       "type": "object",
@@ -14,6 +15,7 @@
               "type": "object",
               "cz:default": true,
               "required": ["enabled"],
+              "description": "End-to-end functional test. Creates a code, builds it, deploys, send a test, validate result, remove code",
               "properties": {
                 "enabled": { "type": "boolean", "enum": [true], "default": true },
                 "rabbitmq_host": { "type": "string", "minLength": 1, "maxLength": 1000, "default": "" },
@@ -37,6 +39,7 @@
               "type": "object",
               "cz:default": true,
               "required": ["enabled"],
+              "description": "This section performs network policy tests. What usercode can access and what not.",
               "properties": {
                 "enabled": { "type": "boolean", "enum": [true], "default": true },
                 "rabbitmq_host": { "type": "string", "minLength": 1, "maxLength": 1000, "default": "" },
@@ -60,6 +63,7 @@
               "type": "object",
               "cz:default": true,
               "required": ["enabled"],
+              "description": "In this section you can define allowed\\denied endpoints for components: gitcall, pimp, docker registry etc.\nThe component adds 'helm test' that you can run at anytime or after deploy.\nWorks in conjunction with gitcall_network_policy component.\ngoogle.com is used to test access to Internet",
               "properties": {
                 "enabled": { "type": "boolean", "enum": [true], "default": true },
                 "gitcall_allow": {
